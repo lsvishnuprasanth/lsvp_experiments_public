@@ -1,0 +1,10 @@
+CREATE OR REPLACE EXTERNAL TABLE
+  `eu-dxone-353411.ds_sftp.metadata_cache_test`(PRODUCT_GROUP	STRING, CATEGORY_GROUP1	STRING, CATEGORY_GROUP2 STRING,	CATEGORY_GROUP3 STRING,	CATEGORY_ID1 STRING,	CATEGORY_ID2 STRING,	CATEGORY_ID3 STRING)
+  WITH CONNECTION `projects/eu-dxone-353411/locations/europe-west3/connections/eudxone_bq_gcs_connection`
+  OPTIONS(
+    format ="csv",
+    uris = ['gs://eu-dxone-util/bigquery-external/cross_prod_recommendation_de.csv'],
+    max_staleness = INTERVAL 6 HOUR,
+    metadata_cache_mode = 'AUTOMATIC',
+    skip_leading_rows=1
+    );

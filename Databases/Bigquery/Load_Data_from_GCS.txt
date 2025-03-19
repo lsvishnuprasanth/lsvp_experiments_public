@@ -1,0 +1,15 @@
+
+-- LOAD Data from GCS
+
+LOAD DATA INTO mydataset.mytable
+FROM FILES (
+  format = 'CSV',
+  uris = ['gs://bucket/path/file.csv']);
+
+gs://cdf-source/test_file.csv
+
+
+LOAD DATA INTO poc.tbl_load_frm_gcs
+FROM FILES (
+  format = 'CSV',
+  uris = ['gs://cdf-source/test_file.csv']);

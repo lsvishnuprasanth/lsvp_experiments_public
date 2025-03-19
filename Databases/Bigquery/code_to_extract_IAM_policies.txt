@@ -1,0 +1,83 @@
+gcloud beta asset search-all-iam-policies --scope=projects/<PROJECT_ID> --query="policy : bigquery" | egrep "role:|user:"
+
+gcloud beta asset search-all-iam-policies --scope=projects/neural-entropy-323508 --query="policy : bigquery" | egrep "role:|user:"
+
+gcloud beta asset search-all-iam-policies --scope=organizations/361626271477 --query="policy : bigquery" | egrep "role:|user:"
+
+
+gcloud beta asset search-all-iam-policies --scope=projects/neural-entropy-323508 --query="policy : bigquery" | egrep "role:|user:" /home/vishnu/gcp_cloud_shell/bq_project_germany.txt
+
+361626271477
+
+Use Case: List roles that a user has upon a project
+  gcloud asset search-all-iam-policies \
+  --scope=projects/12345678 \
+  --query='policy:user@mycompany.com' \
+  --asset-types='cloudresourcemanager.googleapis.com/Project'
+  --page-size=50 \
+  --flatten='policy.bindings[]' \
+  --format='table(policy.bindings.role)'
+  
+  
+ 
+Use Case: List permissions that a user has upon a project
+
+  gcloud asset search-all-iam-policies \
+  --scope=projects/12345678 \
+  --query='policy:user@mycompany.com policy.role.permissions:""' \
+  --asset-types='cloudresourcemanager.*'
+  --page-size=50 \
+  --format='default(explanation.matchedPermissions)'
+  
+  export to bigquery
+  
+  
+    gcloud asset export \
+     --content-type CONTENT_TYPE \
+     --project 'PROJECT_ID' \
+     --snapshot-time 'SNAPSHOT_TIME' \
+     --bigquery-table 'BIGQUERY_TABLE' \
+     --output-bigquery-force
+	 
+	 
+    gcloud asset export \
+     --content-type resource  \
+     --project 'neural-entropy-323508' \
+	 --bigquery-dataset 'train_de_it_dv360'\
+     --bigquery-table 'asset_test' \
+     --output-bigquery-force	 
+	 
+	 
+	Use Case: List resources that can be accessed by Gmail users
+	
+	gcloud asset search-all-iam-policies \
+  --scope=organizations/123456 \
+  --query='policy:gmail.com' \
+  --page-size=50 \
+  --flatten='policy.bindings[].members[]' \
+  --format='csv(resource, policy.bindings.role, policy.bindings.members)' \
+  | grep @gmail.com
+  
+  	gcloud asset search-all-iam-policies \
+  --scope=organizations/361626271477 \
+  --query='policy:teamdxone.com' \
+  --page-size=50 \
+  --flatten='policy.bindings[].members[]' \
+  --format='csv(resource, policy.bindings.role, policy.bindings.members)' \
+  | grep @teamdxone.com
+  
+  
+   gcloud asset search-all-iam-policies \
+  --scope=organizations/361626271477 \
+  --query='policy:hsadgermany.com' \
+  --page-size=50 \
+  --flatten='policy.bindings[].members[]' \
+  --format='csv(resource, policy.bindings.role, policy.bindings.members)' \
+  | grep @hsadgermany.com
+  
+  Get the IAM policy for the Organization using the get-iam-policy command:
+
+
+gcloud alpha organizations get-iam-policy [ORGANIZATION_ID] --format json
+
+gcloud alpha organizations get-iam-policy 361626271477 --format json

@@ -1,0 +1,15 @@
+
+
+Find deleted dataset
+
+SELECT *
+FROM `hsad-analytics-is.region-europe-west3.INFORMATION_SCHEMA.TABLE_STORAGE_TIMELINE`
+WHERE
+    table_schema = 'analytics_is'
+QUALIFY ROW_NUMBER() OVER (PARTITION BY table_name ORDER BY `timestamp` DESC) = 1;
+
+
+
+Restore Dataset
+
+UNDROP SCHEMA `analytics_is`;

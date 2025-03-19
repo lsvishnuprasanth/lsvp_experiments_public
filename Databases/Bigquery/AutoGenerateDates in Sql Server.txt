@@ -1,0 +1,10 @@
+Auto Generate Dates in Sql Server
+
+Select --StartDate,RowNum,
+CONVERT(VARCHAR(7),DATEADD(Month,-rownum,getdate()), 120) CustomDT_ID,
+SUBSTRING(CONVERT(VARCHAR(11), DATEADD(Month,-rownum,getdate()), 113), 4, 8) AS CustomDT_Desc
+from
+(select top(datediff("mm",cast('01-Mar-2016' as datetime),getdate()+1)) 
+DateADD(Month,-datediff("mm",cast('01-Mar-2016' as datetime),getdate()),GETDATE()) StartDate,
+ROW_NUMBER() OVER (ORDER BY [object_id]) RowNum
+FROM sys.all_objects) SQ;
